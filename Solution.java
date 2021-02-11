@@ -2,6 +2,7 @@
 import java.util.*;
 import java.io.*;
 
+//competitive programming template
 class Solution {
 
     static int gcd(int a, int b) {
