@@ -1,8 +1,10 @@
 package RangeQueries.SegmentTree;
 
+import java.util.Arrays;
+
 public class Solution {
     //during input create array of size N, but remaining time just assume it is "nInPowOf2"
-    public int[] constructSegmentTree(int[] nums, int N){
+    public static int[] constructSegmentTree(int[] nums, int N){
         int nInPowOf2 = get(N);
         int[] st = new int[nInPowOf2  * 2];
 
@@ -37,4 +39,11 @@ public class Solution {
         int x = (int)Math.ceil(Math.log(n) / Math.log(2));
         return (int)Math.pow(2, x);
     }
+
+    public static void main(String[] args) {
+        int[] nums = {1,2,3,4};
+        int[] st = constructSegmentTree(nums, nums.length);
+        Arrays.stream(st).forEach(e -> System.out.print(e + " "));
+    }
+
 }

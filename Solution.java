@@ -1,95 +1,54 @@
 
 import java.util.*;
-import java.io.*;
-
-//Programming template
-class Solution {
-
-    static int gcd(int a, int b) {
-        if (b == 0) return a;
-        return gcd(b, a % b);
+public class Solution {
+    public static void main(String[] args) {
     }
 
-    static boolean isPrime(int n) {
-        if (n < 2) return false;
-        for (int x = 2; x * x <= n; x++) {
-            if (n % x == 0) return false;
+    public int maxSpecialProduct(int[] A) {
+        Stack<Integer> stack = new Stack<>();
+        int n = A.length;
+        int[] R = new int[n];
+        R[n - 1] = -1;
+        stack.push(n - 1);
+        for (int i = n - 2; i >= 0; i--){
+            while(!stack.isEmpty() && A[i] >= A[stack.peek()]){
+                stack.pop();
+            }
+            if(stack.isEmpty()){
+                R[i] =  -1;
+            }else{
+                R[i] = stack.peek();
+            }
+            stack.push(i);
         }
-        return true;
-    }
 
-    static boolean[] sieveOfEratosthenes(int n) {
-        boolean[] ans = new boolean[n + 1];
-        Arrays.fill(ans, true);
-        ans[1] = false;
-        for (int i = 2; i <= n; i++) {
-            if (ans[i]) {
-                for (int j = 2 * i; j <= n; j += i) {
-                    ans[j] = false;
-                }
+        int[] L = new int[n];
+        L[0] = -1;
+        stack.clear();
+        System.out.println(stack.size());
+
+        stack.push(0);
+        for (int i = 1; i < n; i++){
+            while(!stack.isEmpty() && A[stack.peek()] <= A[i]){
+                stack.pop();
+            }
+            if(stack.isEmpty()){
+                L[i] = -1;
+            }else{
+                L[i] = stack.peek();
+            }
+            stack.push(i);
+        }
+        Arrays.stream(L).forEach(val -> System.out.print(val + " "));
+        System.out.println();
+        Arrays.stream(R).forEach(val -> System.out.print(val + " "));
+        System.out.println();
+        int ans = 0;
+        for (int i = 1; i < n - 1; i++){
+            if(L[i] > 0 && R[i] > 0){
+                ans = Math.max(ans, L[i] * R[i]);
             }
         }
         return ans;
-    }
-
-    static int modInverse(int a, int m) {
-        for (int x = 1; x < m; x++)
-            if (((a%m) * (x%m)) % m == 1)
-                return x;
-        return 1;
-    }
-
-    long modPow(int x, int n, int m) {
-        if (n == 0) return 1 % m;
-        long u = modPow(x, n / 2, m);
-        u = (u * u) % m;
-        if (n % 2 == 1) u = (u * x) % m;
-        return u;
-    }
-
-    static class IScanner {
-        BufferedReader br;
-        StringTokenizer st;
-
-        public IScanner() {
-            br = new BufferedReader(new InputStreamReader(System.in));
-        }
-
-        String next() {
-            while (st == null || !st.hasMoreElements()) {
-                try {
-                    st = new StringTokenizer(br.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return st.nextToken();
-        }
-
-        int nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        long nextLong() {
-            return Long.parseLong(next());
-        }
-
-        double nextDouble() {
-            return Double.parseDouble(next());
-        }
-
-        String nextLine() {
-            String str = "";
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return str;
-        }
-    }
-
-    //Main
-    public static void main(String[] args) {
     }
 }
