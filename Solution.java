@@ -1,54 +1,68 @@
-
 import java.util.*;
-public class Solution {
+
+class Solution
+{
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int V = in.nextInt();
+        ArrayList<ArrayList<Integer>> GT = new ArrayList<>();
+        for (int i = 0; i  < V; i++){
+            GT.add(new ArrayList<>());
+        }
+        int E = in.nextInt();
+        for (int i = 0; i < E; i++){
+            int u = in.nextInt();
+            int v = in.nextInt();
+            GT.get(u).add(v);
+        }
+
+        System.out.println(new Solution().kosaraju(V, GT));
     }
 
-    public int maxSpecialProduct(int[] A) {
+
+    public int kosaraju(int V, ArrayList<ArrayList<Integer>> G) {
+        ArrayList<ArrayList<Integer>> GT = new ArrayList<>();
+        for (int i = 0; i  < V; i++){
+            GT.add(new ArrayList<>());
+        }
+        for (int u = 0; u < V; u++){
+            for (int v : G.get(u)){
+                GT.get(v).add(u);
+            }
+        }
+
+        int count = 0;
+        boolean[] iv = new boolean[V];
         Stack<Integer> stack = new Stack<>();
-        int n = A.length;
-        int[] R = new int[n];
-        R[n - 1] = -1;
-        stack.push(n - 1);
-        for (int i = n - 2; i >= 0; i--){
-            while(!stack.isEmpty() && A[i] >= A[stack.peek()]){
-                stack.pop();
-            }
-            if(stack.isEmpty()){
-                R[i] =  -1;
-            }else{
-                R[i] = stack.peek();
-            }
-            stack.push(i);
-        }
-
-        int[] L = new int[n];
-        L[0] = -1;
-        stack.clear();
-        System.out.println(stack.size());
-
-        stack.push(0);
-        for (int i = 1; i < n; i++){
-            while(!stack.isEmpty() && A[stack.peek()] <= A[i]){
-                stack.pop();
-            }
-            if(stack.isEmpty()){
-                L[i] = -1;
-            }else{
-                L[i] = stack.peek();
-            }
-            stack.push(i);
-        }
-        Arrays.stream(L).forEach(val -> System.out.print(val + " "));
-        System.out.println();
-        Arrays.stream(R).forEach(val -> System.out.print(val + " "));
-        System.out.println();
-        int ans = 0;
-        for (int i = 1; i < n - 1; i++){
-            if(L[i] > 0 && R[i] > 0){
-                ans = Math.max(ans, L[i] * R[i]);
+        dfs1(G, 0, iv, stack);
+        for (int i = 0; i < V; i++){
+            int u = stack.pop();
+            if(!iv[u]){
+                count++;
+                dfs2(GT, u, iv);
             }
         }
-        return ans;
+        return count;
     }
+
+    public void dfs1(ArrayList<ArrayList<Integer>> G, int u, boolean[] iv, Stack<Integer> stack){
+        iv[u] = true;
+        for (int v : G.get(u)){
+            if(!iv[v]){
+                dfs1(G, v, iv, stack);
+            }
+        }
+        stack.push(u);
+    }
+
+    public void dfs2(ArrayList<ArrayList<Integer>> G, int u, boolean[] iv){
+        iv[u] = true;
+        for (int v : G.get(u)){
+            if(!iv[v]){
+                dfs2(G, v, iv);
+            }
+        }
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package interview_bit.second_number;
+package platforms.interview_bit.second_number;
 
 public class Solution {
     public static void main(String[] args) {

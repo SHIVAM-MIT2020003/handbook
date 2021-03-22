@@ -1,4 +1,4 @@
-package interview_bit.cheapest_flight;
+package platforms.interview_bit.cheapest_flight;
 
 import java.util.*;
 

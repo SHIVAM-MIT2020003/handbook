@@ -1,77 +1,69 @@
 package graph.SCC;
 
 import java.util.*;
-
-public class Solution {
-    public static void main(String args[] ) throws Exception {
+class Solution
+{
+    public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int V = in.nextInt();
+        ArrayList<ArrayList<Integer>> GT = new ArrayList<>();
+        for (int i = 0; i  < V; i++){
+            GT.add(new ArrayList<>());
+        }
         int E = in.nextInt();
-
-        int[][] G = new int[V + 1][V + 1];
-        int[][] GT = new int[V + 1][V + 1];
-        for (int i = 0; i < E; ++i){
+        for (int i = 0; i < E; i++){
             int u = in.nextInt();
             int v = in.nextInt();
-            G[u][v] = 1;
-            GT[v][u] = 1;
+            GT.get(u).add(v);
         }
 
-        int res = scc(G, GT, V);
-        System.out.println(res);
+        System.out.println(new Solution().kosaraju(V, GT));
     }
 
-    static int cs = 0;
-    static int scc(int[][] G, int[][] GT, int V){
-        boolean[] iv = new boolean[V + 1];
+
+    public int kosaraju(int V, ArrayList<ArrayList<Integer>> G) {
+        ArrayList<ArrayList<Integer>> GT = new ArrayList<>();
+        for (int i = 0; i  < V; i++){
+            GT.add(new ArrayList<>());
+        }
+        for (int u = 0; u < V; u++){
+            for (int v : G.get(u)){
+                GT.get(v).add(u);
+            }
+        }
+
+        int count = 0;
+        boolean[] iv = new boolean[V];
         Stack<Integer> stack = new Stack<>();
-        //fill the stack
-        for (int i = 1; i <= V; ++i){
-            if(!iv[i]){
-                cs = 0;
-                dfs(G, iv, i, V, stack);
-            }
-        }
-
-        Arrays.fill(iv, false);
-        int C = 0;
-        int D = 0;
-
-        //use the stack
-        while(!stack.isEmpty()){
+        dfs1(G, 0, iv, stack);
+        for (int i = 0; i < V; i++){
             int u = stack.pop();
-            if(!iv[u]) {
-                cs = 0;
-                dfs(GT, iv, u, V);
-                if(cs % 2 == 0){
-                    D += cs;
-                }else{
-                    C += cs;
-                }
+            if(!iv[u]){
+                count++;
+                dfs2(GT, u, iv);
             }
         }
-        return C-D;
+        return count;
     }
 
-    //dfs with stack
-    static void dfs(int[][] G, boolean[] iv, int src, int V, Stack<Integer> stack){
-        iv[src] = true;
-        for (int v = 1; v <= V; ++v){
-            if(G[src][v] == 1 && !iv[v]){
-                dfs(G, iv, v, V, stack);
+    public void dfs1(ArrayList<ArrayList<Integer>> G, int u, boolean[] iv, Stack<Integer> stack){
+        iv[u] = true;
+        for (int v : G.get(u)){
+            if(!iv[v]){
+                dfs1(G, v, iv, stack);
             }
         }
-        stack.push(src);
+        stack.push(u);
     }
 
-    //dfs without stack
-    static void dfs(int[][] G, boolean[] iv, int src, int V){
-        iv[src] = true;
-        cs++;
-        for (int v = 1; v <= V; ++v){
-            if(G[src][v] == 1 && !iv[v]){
-                dfs(G, iv, v, V);
+    public void dfs2(ArrayList<ArrayList<Integer>> G, int u, boolean[] iv){
+        iv[u] = true;
+        for (int v : G.get(u)){
+            if(!iv[v]){
+                dfs2(G, v, iv);
             }
         }
     }
+
+
 }
