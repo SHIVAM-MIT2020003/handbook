@@ -1,5 +1,6 @@
-package template;
+package code_jam_2021;
 
+import java.awt.image.PixelInterleavedSampleModel;
 import java.util.*;
 import java.io.*;
 
@@ -96,5 +97,7 @@ public class Solution {
 
     //Main
     public static void main(String[] args) {
+        Integer i = 0;
+        i++;
     }
 }

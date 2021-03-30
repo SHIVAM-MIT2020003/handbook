@@ -1,68 +1,70 @@
 import java.util.*;
 
-class Solution
-{
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int V = in.nextInt();
-        ArrayList<ArrayList<Integer>> GT = new ArrayList<>();
-        for (int i = 0; i  < V; i++){
-            GT.add(new ArrayList<>());
-        }
-        int E = in.nextInt();
-        for (int i = 0; i < E; i++){
-            int u = in.nextInt();
-            int v = in.nextInt();
-            GT.get(u).add(v);
+class Solution {
+    public List<List<Integer>> pacificAtlantic(int[][] matrix) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return ans;
+        int m = matrix.length, n = matrix[0].length;
+        boolean[][] p = new boolean[m][n];
+        boolean[][] a = new boolean[m][n];
+
+        Queue<int[]> queue = new LinkedList<>();
+        for (int i = 0; i < m; i++){
+            queue.add(new int[]{i, 0});
+            p[i][0] = true;
         }
 
-        System.out.println(new Solution().kosaraju(V, GT));
-    }
-
-
-    public int kosaraju(int V, ArrayList<ArrayList<Integer>> G) {
-        ArrayList<ArrayList<Integer>> GT = new ArrayList<>();
-        for (int i = 0; i  < V; i++){
-            GT.add(new ArrayList<>());
+        for (int j = 1; j < n; j++){
+            queue.add(new int[]{0, j});
+            p[0][j] = true;
         }
-        for (int u = 0; u < V; u++){
-            for (int v : G.get(u)){
-                GT.get(v).add(u);
+
+        int[] dir = {0,1,0,-1,0};
+        while(!queue.isEmpty()){
+            int[] cor = queue.remove();
+            for (int i = 0; i < 4; i++){
+                int nr = cor[0] + dir[i];
+                int nc = cor[1] + dir[i + 1];
+
+                if(nr >= 0 && nr < m && nc >= 0 && nc < n && !p[nr][nc] && matrix[cor[0]][cor[1]] <= matrix[nr][nc]){
+                    queue.add(new int[]{nr, nc});
+                    p[nr][nc] = true;
+                }
             }
         }
 
-        int count = 0;
-        boolean[] iv = new boolean[V];
-        Stack<Integer> stack = new Stack<>();
-        dfs1(G, 0, iv, stack);
-        for (int i = 0; i < V; i++){
-            int u = stack.pop();
-            if(!iv[u]){
-                count++;
-                dfs2(GT, u, iv);
+
+        queue.clear();
+        for (int i = 0; i < m; i++){
+            queue.add(new int[]{i, n - 1});
+            a[i][n - 1] = true;
+        }
+
+        for (int j = 0; j < n - 1; j++){
+            queue.add(new int[]{m - 1, j});
+            a[m - 1][j] = true;
+        }
+
+        while(!queue.isEmpty()){
+            int[] cor = queue.remove();
+            for (int i = 0; i < 4; i++){
+                int nr = cor[0] + dir[i];
+                int nc = cor[1] + dir[i + 1];
+
+                if(nr >= 0 && nr < m && nc >= 0 && nc < n && !a[nr][nc] && matrix[cor[0]][cor[1]] <= matrix[nr][nc]){
+                    queue.add(new int[]{nr, nc});
+                    a[nr][nc] = true;
+                }
             }
         }
-        return count;
-    }
 
-    public void dfs1(ArrayList<ArrayList<Integer>> G, int u, boolean[] iv, Stack<Integer> stack){
-        iv[u] = true;
-        for (int v : G.get(u)){
-            if(!iv[v]){
-                dfs1(G, v, iv, stack);
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if(a[i][j] && p[i][j]){
+                    ans.add(Arrays.asList(i, j));
+                }
             }
         }
-        stack.push(u);
+        return ans;
     }
-
-    public void dfs2(ArrayList<ArrayList<Integer>> G, int u, boolean[] iv){
-        iv[u] = true;
-        for (int v : G.get(u)){
-            if(!iv[v]){
-                dfs2(G, v, iv);
-            }
-        }
-    }
-
-
 }

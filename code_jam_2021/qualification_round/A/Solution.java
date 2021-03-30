@@ -1,5 +1,7 @@
-package template;
+package code_jam_2021.qualification_round.A;
 
+
+import java.awt.image.PixelInterleavedSampleModel;
 import java.util.*;
 import java.io.*;
 
@@ -96,5 +98,39 @@ public class Solution {
 
     //Main
     public static void main(String[] args) {
+        IScanner in = new IScanner();
+        int t = in.nextInt();
+        int tc = 0;
+        while(t-- > 0){
+            tc++;
+            int N = in.nextInt();
+            int[] nums = new int[N];
+            int[] snums = new int[N];
+            for (int i = 0; i < N; i++){
+                nums[i] = in.nextInt();
+                snums[i] = nums[i];
+            }
+            Arrays.sort(snums);
+
+            int count = 0;
+            for (int i = 0; i < N - 1; i++){
+                for (int j = i; j < N; j++){
+                    if(nums[j] == snums[i]){
+                        reverse(nums, i, j);
+                        count += (j - i + 1);
+                    }
+                }
+            }
+            System.out.println("Case #" + tc + ": " + count);
+        }
+    }
+
+    public static void reverse(int[] nums, int i, int j){
+        while(i < j){
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            i++; j--;
+        }
     }
 }
