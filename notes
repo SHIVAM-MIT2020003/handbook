@@ -1,0 +1,10 @@
+Tree:
+
+
+## level no. gives distance between root and current node
+-> level no. starts from 0
+-> nodes in root to parent(u) path are all ancestor of node u
+-> except u all other nodes in subtree rooted at u are descendent
+
+-> path between any two nodes in tree
+		go upward and then downward , never zig-zag

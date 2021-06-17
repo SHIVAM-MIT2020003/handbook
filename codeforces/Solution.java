@@ -1,4 +1,4 @@
-package template;
+package codeforces;
 
 import java.util.*;
 import java.io.*;
@@ -94,20 +94,7 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        try {
-            solve();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    static class Node{
-        List<int[]> adj = new ArrayList<>();
-    }
-    public static void solve(){
         IScanner in = new IScanner();
-        PrintWriter out = new PrintWriter(System.out);
-        out.flush();
-
     }
 }
+

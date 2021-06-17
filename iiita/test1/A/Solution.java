@@ -1,8 +1,9 @@
-package template;
+package iiita.test1.A;
 
 import java.util.*;
 import java.io.*;
 
+//Programming template
 public class Solution {
 
     static int gcd(int a, int b) {
@@ -93,21 +94,29 @@ public class Solution {
         }
     }
 
+    //Main
     public static void main(String[] args) {
-        try {
-            solve();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    static class Node{
-        List<int[]> adj = new ArrayList<>();
-    }
-    public static void solve(){
         IScanner in = new IScanner();
-        PrintWriter out = new PrintWriter(System.out);
-        out.flush();
+        int Q = in.nextInt();
 
+        while(Q-- > 0){
+            int K = in.nextInt();
+            int[] val = new int[2];
+            int a = 1;
+            int ans = -1;
+            for (int i = 1; i * i <= K; i++){
+                if(K % i == 0){
+                    int hcf = gcd(i, K / i);
+                    if(ans < hcf){
+                        ans = hcf;
+                        val[0] = K / i;
+                        val[1] = i;
+                    }
+                }
+            }
+            if(ans == -1)
+                System.out.println(ans);
+            System.out.println(val[0] + " " + val[1]);
+        }
     }
 }

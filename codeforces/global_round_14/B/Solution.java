@@ -1,4 +1,4 @@
-package template;
+package codeforces.global_round_14.B;
 
 import java.util.*;
 import java.io.*;
@@ -94,20 +94,49 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        try {
-            solve();
-        }catch (Exception e){
-            e.printStackTrace();
+        IScanner in = new IScanner();
+        int t = in.nextInt();
+        while(t-- > 0){
+            int n = in.nextInt();
+            int setcount = 0;
+            for (int i = 0; i < 31; i++){
+                if(((n >> i) & 1) == 1){
+                    setcount++;
+                }
+            }
+
+            if(setcount == 1){
+                System.out.println("YES");
+                continue;
+            }
+
+            int val = 16;
+            int nn = n;
+            while(nn - val > 0){
+                nn = nn - val;
+                val = val << 1;
+            }
+
+            if(nn == 2){
+                System.out.println("YES");
+                continue;
+            }
+
+            val = 32;
+            nn = n;
+            while(nn - val > 0){
+                nn = nn - val;
+                val = val << 1;
+            }
+
+            if(n == 4){
+                System.out.println("YES");
+            }else{
+                System.out.println("NO");
+            }
+
+
         }
     }
-
-    static class Node{
-        List<int[]> adj = new ArrayList<>();
-    }
-    public static void solve(){
-        IScanner in = new IScanner();
-        PrintWriter out = new PrintWriter(System.out);
-        out.flush();
-
-    }
 }
+

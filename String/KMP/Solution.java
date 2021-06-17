@@ -45,4 +45,12 @@ public class Solution {
     }
 }
 
+//
+//0123456789
+//ABCXYZABCD
+//000000123
+//
+//j = 3
+//i = 9
+
 

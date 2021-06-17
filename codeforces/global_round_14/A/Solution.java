@@ -1,4 +1,4 @@
-package template;
+package codeforces.global_round_14.A;
 
 import java.util.*;
 import java.io.*;
@@ -94,20 +94,45 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        try {
-            solve();
-        }catch (Exception e){
-            e.printStackTrace();
+        IScanner in = new IScanner();
+        int t = in.nextInt();
+        while(t-- > 0){
+            int n = in.nextInt();
+            int x = in.nextInt();
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++){
+                arr[i] = in.nextInt();
+            }
+
+            Arrays.sort(arr);
+            int total = 0;
+            int i;
+            for (i = 0; i < n; i++){
+                total += arr[i];
+                if(total == x)
+                {
+                  break;
+                }
+            }
+
+            if(i == n - 1){
+                System.out.print("NO");
+            }else if(i == n){
+                System.out.println("YES");
+                for (int j = 0; j < n; j++){
+                    System.out.print(arr[j] + " ");
+                }
+            }else{
+                int temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                System.out.println("YES");
+                for (int j = 0; j < n; j++){
+                    System.out.print(arr[j] + " ");
+                }
+            }
+            System.out.println("");
         }
     }
-
-    static class Node{
-        List<int[]> adj = new ArrayList<>();
-    }
-    public static void solve(){
-        IScanner in = new IScanner();
-        PrintWriter out = new PrintWriter(System.out);
-        out.flush();
-
-    }
 }
+

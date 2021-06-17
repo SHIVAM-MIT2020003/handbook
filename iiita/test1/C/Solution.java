@@ -1,8 +1,9 @@
-package template;
+package iiita.test1.C;
 
 import java.util.*;
 import java.io.*;
 
+//Programming template
 public class Solution {
 
     static int gcd(int a, int b) {
@@ -93,21 +94,71 @@ public class Solution {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            solve();
-        }catch (Exception e){
-            e.printStackTrace();
+    static List<Integer> factors(int n){
+        List<Integer> ans = new ArrayList<>();
+        // If there is factor then it must be less than equal to sqrt(n)
+        for (int x = 2; x * x <= n; x++){
+            while(n % x == 0){
+                ans.add(x);
+                n = n / x;
+            }
         }
+        //if n becomes prime after some factorization then will be no factor other than self
+        if(n > 1) ans.add(n);
+        return ans;
     }
 
-    static class Node{
-        List<int[]> adj = new ArrayList<>();
-    }
-    public static void solve(){
+
+    //Main
+    public static void main(String[] args) {
         IScanner in = new IScanner();
-        PrintWriter out = new PrintWriter(System.out);
-        out.flush();
+        int t = in.nextInt();
+        while(t-- > 0){
+            int N = in.nextInt();
+            int Q = in.nextInt();
+            long[] A = new long[N + 1];
+            int[] minL = new int[N + 1];
+            int[] minR = new int[N + 1];
+            int[] maxL = new int[N + 1];
+            int[] maxR = new int[N + 1];
+            int[] nums = new int[N];
+            long total = 0l;
+            for (int i = 0; i < N; i++){
+                nums[i] = in.nextInt();
+                total += nums[i];
+            }
 
+            for (int i = 0; i < N; i++){
+                A[i + 1] = A[i] + nums[i];
+            }
+
+            minL[0] = Integer.MAX_VALUE;
+            maxL[0] = Integer.MIN_VALUE;
+
+            for (int i = 0; i < N; i++){
+                minL[i + 1] = Math.min(minL[i], nums[i]);
+                maxL[i + 1] = Math.max(maxL[i], nums[i]);
+            }
+
+            minR[N] = minL[0];
+            maxR[N] = maxR[0];
+
+            for (int i = N - 1; i >= 0; i--){
+                minR[i] = Math.min(minR[i + 1], nums[i]);
+                maxR[i] = Math.max(maxR[i + 1], nums[i]);
+            }
+
+
+            while(Q-- > 0){
+                int L = in.nextInt() - 1, R = in.nextInt() - 1;
+                long sum = total - (A[R + 1] - A[L]);
+                int c = N - (R - L + 1);
+                int min = Math.min(minL[L], minR[R + 1]);
+                int max = Math.max(maxL[L], maxR[R + 1]);
+                long ans = (long)((1.0 * (sum -  c * min + c) * 1_000_000) / (max - min + 1));
+                System.out.println(ans);
+            }
+
+        }
     }
 }
