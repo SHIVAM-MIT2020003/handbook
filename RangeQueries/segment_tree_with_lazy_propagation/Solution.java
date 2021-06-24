@@ -13,6 +13,8 @@ public class Solution {
     static long[] tree;
     static long[] cache;
     static boolean[] isLazy;
+
+
     static int N;
 
     //Segment tree for sum queries
@@ -42,7 +44,7 @@ public class Solution {
         }
     }
 
-    static  void pushDown(int root, int left, int right){
+    static void pushDown(int root, int left, int right){
         if(isLazy[root]){
             isLazy[root] = false;
             int mid = (left + right) / 2;
@@ -85,15 +87,15 @@ public class Solution {
         update(2 * root + 1, mid + 1, right, qleft, qright, val);
         tree[root] = tree[2 * root] + tree[2 * root + 1];
     }
-
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        PrintWriter out = new PrintWriter(System.out);
-
-        int[] nums = {1,2,3,4,5,6,7,8};
-        builtSumST(nums);
-        update(1, 0, 7, 0, 2, 2);
-        System.out.println(getSum(1, 0, 7, 0,0));
-
-    }
+//
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        PrintWriter out = new PrintWriter(System.out);
+//
+//        int[] nums = {1,2,3,4,5,6,7,8};
+//        builtSumST(nums);
+//        update(1, 0, N - 1, 0, 2, 2);
+//        System.out.println(getSum(1, 0, N - 1, 0,0));
+//
+//    }
 }

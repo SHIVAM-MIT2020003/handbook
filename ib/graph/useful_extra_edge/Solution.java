@@ -1,11 +1,8 @@
+package ib.graph.useful_extra_edge;
+
 import java.util.*;
 
-public class Main{
-
-}
-
-
-class S {
+public class Solution {
     static class pair{
         int to, weight;
         pair(int x, int y){
@@ -19,7 +16,7 @@ class S {
     private int shortestPath(int nodes, int start, int end, int[][] E){
         int[] distance = new int[nodes];
         int[] parent = new int[nodes];
-        boolean[] visited = new boolean[nodes];
+        boolean[] isCovered = new boolean[nodes];
         Arrays.fill(distance, Integer.MAX_VALUE);
         Arrays.fill(parent, -1);
         PriorityQueue<pair> p = new PriorityQueue<>(new Comparator<pair>() {
@@ -35,21 +32,24 @@ class S {
             int node = p.peek().to;
             int dis = p.peek().weight;
             p.poll();
-            if (visited[node]) continue;
-            visited[node] = true;
+            if (isCovered[node]) continue;
+            isCovered[node] = true;
             for(pair child : gr.get(node)){
                 int new_node = child.to;
                 int new_distance = child.weight;
 
-                if (!visited[new_node] && dis + new_distance <= distance[new_node]){
+                if (!isCovered[new_node] && dis + new_distance <= distance[new_node]){
                     distance[new_node] = dis + new_distance;
                     p.add(new pair(new_node, distance[new_node]));
                     parent[new_node] = node;
                 }
             }
         }
+        
+        
         if( parent[end] == -1) return -1;
         int total_sum = distance[end];
+        
         int result = Integer.MAX_VALUE;
         for( int[] road : E){
             int temp = total_sum;

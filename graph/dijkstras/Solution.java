@@ -34,17 +34,17 @@ class Solution {
 
             PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
             int[] distance = new int[n + 1];
-            boolean[] isVisited = new boolean[n + 1];
+            boolean[] isCovered = new boolean[n + 1];
 
             Arrays.fill(distance, Integer.MAX_VALUE);
             distance[s] = 0;
             pq.offer(new int[] {s, 0});
 
             while(!pq.isEmpty()){
-                int[] node = pq.poll();
-                int u = node[0], w = node[1];
-                if(isVisited[u]) continue;
-                isVisited[u] = true;
+                int u = pq.peek()[0], w = pq.peek()[1];
+                pq.poll();
+                if(isCovered[u]) continue;
+                isCovered[u] = true;
                 for (int v = 1; v <= n; v++){
                     if(g[u][v] != 0){
                         if(distance[u] + g[u][v] < distance[v]){
