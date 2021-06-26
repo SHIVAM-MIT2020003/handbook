@@ -1,78 +1,49 @@
-/*
-// Definition for a RandomListNode.
-class RandomListNode {
-    int label;
-    RandomListNode next;
-    RandomListNode random;
+import java.util.*;
 
-    public RandomListNode(int label) {
-        this.label = label;
-        this.next = null;
-        this.random = null;
-    }
-}
-*/
+public class Solution {
+    public int[][] subsets(int[] A) {
+        Arrays.sort(A);
+        List<List<Integer>> ans = helper(A);
+
+        Collections.sort(ans, (a, b) -> {
+
+            int min = Math.min(a.size(), b.size());
+            for (int i = 0; i < min; i++){
+                if(a.get(i) != b.get(i)){
+                    if(a.get(i) < b.get(i)) return -1;
+                    else return 1;
+                }
+            }
+
+            return a.size() <= b.size() ? -1 : 1;
+        });
 
 
-class Solution {
-    public RandomListNode copyRandomList(RandomListNode f) {
-        if(f == null) return null;
-        RandomListNode head = new RandomListNode(-1);
-        head.next = f;
-        insert(head);
-        fillRandom(head);
-        split(head);
-        return head.next;
-    }
 
-    public void split(RandomListNode head){
-        RandomListNode itr1 = head.next;
-        RandomListNode itr2 = head.next.next;
-        while(itr1 != null && itr2 != null){
-            head.next = itr2;
-            itr1.next = itr2.next;
-            head = head.next;
-            itr1 = itr1.next;
-            if(itr1 == null) break;
-            itr2 = itr1.next;
+
+
+        int[][] res = new int[ans.size()][];
+        for (int i = 0; i < ans.size(); i++){
+            res[i] = ans.get(i).stream().mapToInt(a -> a).toArray();
         }
+        return res;
     }
 
-    public void fillRandom(RandomListNode head){
-        RandomListNode itr = head.next;
-        while(itr != null){
-            if(itr.random != null)
-                itr.next.random = itr.random.next;
-            if(itr.next == null) break;
-            itr = itr.next.next;
+    public List<List<Integer>> helper(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        dfs(nums, 0, nums.length, ans, new ArrayList<>());
+        return ans;
+    }
+
+    public void dfs(int[] nums, int i, int n, List<List<Integer>> ans, List<Integer> cur){
+        if(i == n){
+            ans.add(new ArrayList<>(cur));
+            return;
         }
-    }
 
-    public void insert(RandomListNode head){
-        RandomListNode old = head.next;
-        while(old != null){
-            RandomListNode newNode = new RandomListNode(old.label);
-            RandomListNode temp = old.next;
-            old.next = newNode;
-            newNode.next = temp;
-            old = temp;
-        }
+        dfs(nums, i + 1, n, ans, cur);
+        cur.add(nums[i]);
+        dfs(nums, i + 1, n, ans, cur);
+        cur.remove(cur.size() - 1);
     }
-
-    public void print1(RandomListNode head){
-        while(head != null){
-            System.out.print(head.label + " ");
-            head = head.next;
-        }
-        System.out.println();
-    }
-
-    public void print2(RandomListNode head){
-        while(head != null){
-            System.out.print(head.hashCode() + " ");
-            head = head.next;
-        }
-        System.out.println();
-    }
-
 }

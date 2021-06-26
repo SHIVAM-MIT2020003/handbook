@@ -1,6 +1,4 @@
 Ques: HOW LOG = (int)(Math.log(n) / Math.log(2)) + 1   ??
 
-Ans: Because, we need to find required number of bits to represent n.   (****)
-     or
-     position of left most set bit.
+Ans: log(n) => number of bits required to represent 'n'.
 
