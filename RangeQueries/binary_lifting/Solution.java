@@ -1,4 +1,4 @@
-package tree.binary_lifting;
+package RangeQueries.binary_lifting;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,6 +51,7 @@ class Solution {
     static class Node{
         List<Integer> children = new ArrayList<>();
     }
+
     static int[][] up;
     static int LOG;
     static int[] depth;

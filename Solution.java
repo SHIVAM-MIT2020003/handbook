@@ -1,49 +1,42 @@
+
 import java.util.*;
 
-public class Solution {
-    public int[][] subsets(int[] A) {
-        Arrays.sort(A);
-        List<List<Integer>> ans = helper(A);
+class Solution {
+    public static void main(String[] args) {
+        int[] nums = {1,2,3,4,4,4,4,3,2,1};
+        new Solution().candy(nums);
+    }
+    public int candy(int[] rating) {
+        int n = rating.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        Arrays.fill(left, 1);
+        Arrays.fill(right, 1);
 
-        Collections.sort(ans, (a, b) -> {
-
-            int min = Math.min(a.size(), b.size());
-            for (int i = 0; i < min; i++){
-                if(a.get(i) != b.get(i)){
-                    if(a.get(i) < b.get(i)) return -1;
-                    else return 1;
-                }
+        for (int i = 1; i < n; i++){
+            if(rating[i - 1] < rating[i]){
+                left[i] = left[i - 1] + 1;
             }
-
-            return a.size() <= b.size() ? -1 : 1;
-        });
-
-
-
-
-
-        int[][] res = new int[ans.size()][];
-        for (int i = 0; i < ans.size(); i++){
-            res[i] = ans.get(i).stream().mapToInt(a -> a).toArray();
         }
-        return res;
-    }
 
-    public List<List<Integer>> helper(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        dfs(nums, 0, nums.length, ans, new ArrayList<>());
+        for (int i = n - 2; i >= 0; i--){
+            if(rating[i] > rating[i + 1]){
+                right[i] = right[i + 1] + 1;
+            }
+        }
+
+        Arrays.stream(rating).forEach(val -> System.out.print(val + " "));
+        System.out.println();
+        Arrays.stream(left).forEach(val -> System.out.print(val + " "));
+        System.out.println();
+        Arrays.stream(right).forEach(val -> System.out.print(val + " "));
+        System.out.println();
+
+        int ans = 0;
+        for (int i = 0; i < n; i++){
+            ans += Math.max(left[i], right[i]);
+        }
+
         return ans;
-    }
-
-    public void dfs(int[] nums, int i, int n, List<List<Integer>> ans, List<Integer> cur){
-        if(i == n){
-            ans.add(new ArrayList<>(cur));
-            return;
-        }
-
-        dfs(nums, i + 1, n, ans, cur);
-        cur.add(nums[i]);
-        dfs(nums, i + 1, n, ans, cur);
-        cur.remove(cur.size() - 1);
     }
 }

@@ -22,7 +22,7 @@ public class Solution {
         boolean[] ans = new boolean[n + 1];
         Arrays.fill(ans, true);
         ans[1] = false;
-        for (int i = 2; i <= n; i++) {
+        for (int i = 2; i * i <= n; i++) {
             if (ans[i]) {
                 for (int j = 2 * i; j <= n; j += i) {
                     ans[j] = false;
@@ -107,6 +107,7 @@ public class Solution {
     public static void solve(){
         IScanner in = new IScanner();
         PrintWriter out = new PrintWriter(System.out);
+
         out.flush();
 
     }
