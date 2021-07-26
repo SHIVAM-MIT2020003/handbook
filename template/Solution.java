@@ -32,19 +32,17 @@ public class Solution {
         return ans;
     }
 
-    static int modInverse(int a, int m) {
-        for (int x = 1; x < m; x++)
-            if (((a%m) * (x%m)) % m == 1)
-                return x;
-        return 1;
-    }
-
-    long modPow(int x, int n, int m) {
-        if (n == 0) return 1 % m;
-        long u = modPow(x, n / 2, m);
-        u = (u * u) % m;
-        if (n % 2 == 1) u = (u * x) % m;
-        return u;
+    //binary exponentiation with mod =>   (a^b) % m
+    long binPow(long a, long b, long m) {
+        a %= m;
+        long res = 1;
+        while (b > 0) {
+            if ((b & 1) != 0)
+                res = res * a % m;
+            a = a * a % m;
+            b >>= 1;
+        }
+        return res;
     }
 
     int max(int ...nums){
@@ -104,11 +102,10 @@ public class Solution {
     static class Node{
         List<int[]> adj = new ArrayList<>();
     }
+
     public static void solve(){
         IScanner in = new IScanner();
         PrintWriter out = new PrintWriter(System.out);
-
         out.flush();
-
     }
 }

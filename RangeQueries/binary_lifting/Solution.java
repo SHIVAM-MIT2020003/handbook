@@ -1,9 +1,6 @@
 package RangeQueries.binary_lifting;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 
 class Solution {
@@ -61,6 +58,7 @@ class Solution {
         PrintWriter out = new PrintWriter(System.out);
         int n = in.nextInt();
         Node[] tree = new Node[n];
+
         for (int i = 0; i < n; i++){
             tree[i] = new Node();
         }
@@ -79,7 +77,7 @@ class Solution {
         up = new int[n][LOG];
         depth = new int[n];
 
-        dfs(tree, 0);
+        dfs(tree, 0); // root is 0
 
         while(q-- > 0){
             int u = in.nextInt();
@@ -95,13 +93,15 @@ class Solution {
             up[v][0] = u;
             for (int i = 1; i < LOG; i++){
                 int p = up[v][i - 1];
-                up[v][i] = up[p][i - 1];
+                up[v][i] = up[p][i - 1]; // 2^i ancestor of 'v'
             }
             dfs(tree, v);
         }
     }
 
     public static int getLCA(int u, int v){
+        //I want depth of 'u' <= depth of 'v'
+
         if(depth[u] > depth[v]){
             int temp = v;
             v = u;
@@ -123,7 +123,7 @@ class Solution {
                 v = up[v][i];
             }
         }
-        return up[u][0];
+        return up[u][0];  // just make a jump of 2^0
     }
 }
 

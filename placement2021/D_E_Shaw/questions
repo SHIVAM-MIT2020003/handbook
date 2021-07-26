@@ -1,0 +1,4 @@
+I gave D E Shaw' s coding test yesterday. These were the 3 questions. (25 mins, 35 mins and 35 mins were the duration for each question respectively)
+1. Given 3 arrays, find number of ways to get a triplet whose sum is divisible by 7. Expected TC O(1)
+2. Given an array of size <= 1e6,  containing elements <= 1e4, find probability (modulo M) of forming a subsequence whose &, | and ^ values are equal.
+3. Given the cost of each digit <= 1000, build the largest number possible with spending exactly x <= 1000 money.
