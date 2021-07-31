@@ -15,11 +15,6 @@ Coding Tips:
 
 
 
-
-
-
-
-
 DP:
     Every solution for sub-problem must be correct.
     Solution order helps in debugging
@@ -33,3 +28,6 @@ GREEDY:
     Two parameter dependent problem
         1. heap + sorting
         sort with respect to one parameter + optimize with respect to another parameter
+
+
+n(logn) => n + (n / 2) + (n / 3) + (n / 4) + ..........
