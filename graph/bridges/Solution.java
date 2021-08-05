@@ -13,9 +13,11 @@ public class Solution {
                 p[v] = u;
                 dfs(graph, v, t, p, low, dis, isVisited, ans);
                 low[u] = Math.min(low[u], low[v]);
+                //check back-edge
                 if(low[v] > dis[u]){
                     ans.add(Arrays.asList(u, v));
                 }
+                //v is part of circle
             }else if(p[u] == null || p[u] != v){
                 low[u] = Math.min(low[u], low[v]);
             }
@@ -23,3 +25,4 @@ public class Solution {
 
     }
 }
+

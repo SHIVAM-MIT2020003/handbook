@@ -3,6 +3,12 @@ package RangeQueries.sparse_table;
 import java.io.*;
 import java.util.StringTokenizer;
 
+
+/*
+LOG = log(n) + 1
+ */
+
+
 public class Solution {
 
     static class FastScanner{

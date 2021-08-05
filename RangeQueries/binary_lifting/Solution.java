@@ -1,5 +1,12 @@
 package RangeQueries.binary_lifting;
 
+/*
+
+LOG =  (log(n)) + 1 =>
+
+
+
+ */
 import java.io.*;
 import java.util.*;
 
@@ -74,6 +81,8 @@ class Solution {
         int q = in.nextInt();
 
         LOG = (int)(Math.log(n) / Math.log(2)) + 1;
+
+        // max size jump is 2 ^ (LOG - 1) in n length rod
         up = new int[n][LOG];
         depth = new int[n];
 
