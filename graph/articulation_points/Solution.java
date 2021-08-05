@@ -6,6 +6,7 @@ public class Solution {
         disc[u] = time + 1;
         low[u] = time + 1;
         int c = 0;
+        //statement 1: this loop is for only children of 'u'
         for (int v = 0; v < graph[u].length; v++){
             if(graph[u][v] == 1){
                 if(!isVisited[v]){
@@ -19,7 +20,7 @@ public class Solution {
                   if(par[u] != null && low[v] >= disc[u]){
                       AP[u] = true;
                   }
-                }else if(par[u] == null || par[u] != v){ // second condition is only imp
+                }else if(par[u] == null || par[u] != v){ //make sure, 'v' should not be the parent of 'u'... inorder  to satisfy statement 1
                     low[u] = Math.min(low[u], low[v]);
                 }
             }

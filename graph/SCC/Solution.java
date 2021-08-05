@@ -1,6 +1,7 @@
 package graph.SCC;
 
 import java.util.*;
+
 class Solution
 {
     public static void main(String[] args) {
@@ -36,6 +37,8 @@ class Solution
         boolean[] iv = new boolean[V];
         Stack<Integer> stack = new Stack<>();
         dfs1(G, 0, iv, stack);
+
+        Arrays.fill(iv, false);
         for (int i = 0; i < V; i++){
             int u = stack.pop();
             if(!iv[u]){
@@ -64,6 +67,4 @@ class Solution
             }
         }
     }
-
-
 }
