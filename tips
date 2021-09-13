@@ -9,6 +9,18 @@ Coding Tips:
 7. Visualization => CODE (***)
 8. Example => Observation (***)
 9. Slow and Complete Visual Simulation
+10. Simulation => Code (***)
+11. Think ONLY LOGIC                            (DO NOT THINK ABOUT CODE)
+12. NO Overthinking
+
+
+
+Tree : Undirected Connected Acyclic Graph
+Disjoint Set: Used for Undirected Graph
+
+LLD
+https://www.tutorialspoint.com/design_pattern/builder_pattern.htm
+https://www.tutorialspoint.com/design_pattern/decorator_pattern.htm
 
 
 
@@ -16,19 +28,14 @@ Coding Tips:
 
 
 
-DP:
-    Every solution for sub-problem must be correct.
-    Solution order helps in debugging
 
 
-GREEDY:
-    One parameter dependent problem
-        1. heap
-        2. sorting
-
-    Two parameter dependent problem
-        1. heap + sorting
-        sort with respect to one parameter + optimize with respect to another parameter
 
 
-n(logn) => n + (n / 2) + (n / 3) + (n / 4) + ..........
+
+
+
+
+
+
+

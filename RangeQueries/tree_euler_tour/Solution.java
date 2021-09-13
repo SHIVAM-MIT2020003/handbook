@@ -9,7 +9,6 @@ class Solution {
     static class Node{
         List<Integer> adj = new ArrayList<>();
     }
-
     static class Time{
         int in, out;
         public Time(){

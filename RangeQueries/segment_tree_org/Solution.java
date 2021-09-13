@@ -37,6 +37,7 @@ public class Solution {
         if(qlow > high || qhigh < low) return 0;
 
         int mid = (low + high) / 2;
+
         return getSum(root * 2, low, mid, qlow, qhigh) + getSum(root * 2 + 1, mid + 1, high, qlow, qhigh);
     }
 

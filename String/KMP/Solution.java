@@ -4,6 +4,8 @@ public class Solution {
     public static void main(String[]args){
         String src = "abaabacd";
         String tar = "abcabcd";
+
+
         int[] pi = prefix(tar.toCharArray());
         for (int val : pi){
             System.out.print(val + " ");
@@ -26,9 +28,12 @@ public class Solution {
         return false;
     }
 
+
+//    abcdabce
+
     public static int[] prefix(char[] target){
         int n = target.length;
-        int[] pi = new int[n];
+        int[] pi = new int[n]; //contains length of proper prefix which is suffix
         pi[0] = 0; // matched length t then prefix length t - 1
         for (int i = 1, j = 0; i < n; i++){
             while(j > 0 && target[j] != target[i]){

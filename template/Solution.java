@@ -4,12 +4,10 @@ import java.util.*;
 import java.io.*;
 
 public class Solution {
-
     static int gcd(int a, int b) {
         if (b == 0) return a;
         return gcd(b, a % b);
     }
-
     static boolean isPrime(int n) {
         if (n < 2) return false;
         for (int x = 2; x * x <= n; x++) {
@@ -17,23 +15,20 @@ public class Solution {
         }
         return true;
     }
-
     static boolean[] sieveOfEratosthenes(int n) {
         boolean[] ans = new boolean[n + 1];
         Arrays.fill(ans, true);
         ans[1] = false;
         for (int i = 2; i * i <= n; i++) {
             if (ans[i]) {
-                for (int j = 2 * i; j <= n; j += i) {
+                for (int j = i + i; j <= n; j = j + i) {
                     ans[j] = false;
                 }
             }
         }
         return ans;
     }
-
-    //binary exponentiation with mod =>   (a^b) % m
-    long binPow(long a, long b, long m) {
+    static long binPow(long a, long b, long m) {
         a %= m;
         long res = 1;
         while (b > 0) {
@@ -44,11 +39,10 @@ public class Solution {
         }
         return res;
     }
-
-    int max(int ...nums){
+    
+    static int max(int ...nums){
         return Arrays.stream(nums).max().getAsInt();
     }
-
     static class IScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -90,8 +84,13 @@ public class Solution {
             return str;
         }
     }
+    static class Node{
+        List<int[]> adj = new ArrayList<>();
+    }
+    static IScanner in = new IScanner();
+    static PrintWriter out = new PrintWriter(System.out);
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             solve();
         }catch (Exception e){
@@ -99,13 +98,7 @@ public class Solution {
         }
     }
 
-    static class Node{
-        List<int[]> adj = new ArrayList<>();
-    }
-
     public static void solve(){
-        IScanner in = new IScanner();
-        PrintWriter out = new PrintWriter(System.out);
         out.flush();
     }
 }

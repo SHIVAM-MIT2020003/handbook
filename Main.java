@@ -1,42 +1,32 @@
 
+import java.io.*;
 import java.util.*;
 
-class Main {
-
+class Main{
     public static void main(String[] args) {
-        ArrayList<Integer> rolls = new ArrayList<>(Arrays.asList(2,1,2,1,3,4));
-        System.out.println(new Main().getWays(2, rolls));
+        String s = "ILoveIBM";
+        List<String> words = new ArrayList<>();
+        words.add("I");
+        words.add("YOU");
+        words.add("IBM");
+        words.add("Love");
+        words.add("We");
+
+        System.out.println(checkString(s, words));
     }
 
-    public int getWays(int n, ArrayList<Integer> maxRolls) {
+    public static boolean checkString(String s, List<String> words){
+        int n = s.length();
+        Set<String> set = new HashSet<>(words);
+        boolean[] dp = new boolean[n + 1];
+        dp[n] = true;
 
-        long[][] dp = new long[6][n];
-
-        int mod = (int)(1e9+7);
-
-        for (int i = 0; i < 6; i++){
-            dp[i][0] = 1l;
-        }
-
-        for (int i = 1; i < n; i++){
-            for (int j = 0; j < 6; j++){
-                if(maxRolls.get(j) >= i + 1){
-                    dp[j][i]++;
-                }
-                for (int c = 1; c <= maxRolls.get(j) && (i - c) >= 0; c++){
-                    for (int k = 0; k < 6; k++){
-                        if(k == j) continue;
-                        dp[j][i] = (dp[j][i] + dp[k][i - c]) % mod;
-                    }
-                }
+        for (int i = n - 1; i >= 0; i--){
+            for (int j = i; j < n; j++){
+                dp[i] = dp[i] || (set.contains(s.substring(i, j + 1)) && dp[j + 1]);
             }
         }
 
-        long res = 0l;
-        for (int i = 0; i < 6; i++){
-            res = (res + dp[i][n - 1]) % mod;
-        }
-
-        return (int)res;
+        return dp[0];
     }
 }

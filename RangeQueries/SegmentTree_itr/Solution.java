@@ -1,4 +1,4 @@
-package RangeQueries.SegmentTree;
+package RangeQueries.SegmentTree_itr;
 
 class NumArray {
     int N;
