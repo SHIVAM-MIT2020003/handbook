@@ -23,3 +23,4 @@ class SpotFactory{
 
 public class Solution {
 }
+

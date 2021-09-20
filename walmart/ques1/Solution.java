@@ -46,7 +46,6 @@ class Solution {
             edges[i] = new int[]{u, v};
         }
 
-
         int[] ans = new int[m];
 
         int totalPairs = n * (n - 1) / 2;
