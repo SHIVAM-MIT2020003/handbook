@@ -1,4 +1,4 @@
-package walmart.ques6;
+package placement2021.walmart.ques6;
 
 import java.util.Scanner;
 

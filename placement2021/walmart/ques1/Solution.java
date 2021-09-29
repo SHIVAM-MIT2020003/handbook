@@ -1,4 +1,4 @@
-package walmart.ques1;
+package placement2021.walmart.ques1;
 
 //There are N cities in a country and M roads are connected these cities. The i-th road connects u and v cities bidirectionally.
 
@@ -46,9 +46,10 @@ class Solution {
             edges[i] = new int[]{u, v};
         }
 
-        int[] ans = new int[m];
+        long[] ans = new long[m];
 
-        int totalPairs = n * (n - 1) / 2;
+        long totalPairs = n * (n - 1) / 2;
+
         for (int i = m - 1; i >= 0; i--){
             ans[i] = totalPairs;
             int u = edges[i][0];

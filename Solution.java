@@ -1,85 +1,53 @@
 
 import java.util.*;
-import java.io.*;
 
-public class Solution {
-    static class IScanner {
-        BufferedReader br;
-        StringTokenizer st;
-
-        public IScanner() {
-            br = new BufferedReader(new InputStreamReader(System.in));
-        }
-
-        String next() {
-            while (st == null || !st.hasMoreElements()) {
-                try {
-                    st = new StringTokenizer(br.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return st.nextToken();
-        }
-
-        int nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        long nextLong() {
-            return Long.parseLong(next());
-        }
-
-        double nextDouble() {
-            return Double.parseDouble(next());
-        }
-
-        String nextLine() {
-            String str = "";
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return str;
-        }
-    }
-
-    static IScanner in = new IScanner();
-    static PrintWriter out = new PrintWriter(System.out);
-
+class Solution {
     public static void main(String[] args) {
-        try {
-            solve();
-        }catch (Exception e){
-            e.printStackTrace();
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        long[] weight = new long[n];
+        for (int i = 0; i < n; i++){
+            weight[i] = in.nextLong();
         }
+        long capacity = in.nextLong();
+        System.out.println(solve(weight, capacity));
     }
 
-    public static void solve(){
-        int t = in.nextInt();
-
-        while(t-- > 0){
-            char[] days = in.nextLine().toCharArray();
-            int n = days.length;
-            int a = 0;
-            int ans = 0;
-            for (int s = 0, e = 0; e < n; e++){
-                if(days[e] == '0'){
-                    a++;
+    public static long solve(long[] nums, long capacity) {
+        List<Long> first = new ArrayList<>();
+        List<Long> second = new ArrayList<>();
+        int n = nums.length;
+        int mid = n / 2;
+        comb(nums, 0, mid, first, 0);
+        comb(nums, mid + 1, n - 1, second, 0);
+        Collections.sort(second);
+        long max = 0l;
+        for (long v1 : first){
+            long target = capacity - v1;
+            long v2 = -1;
+            int left = 0, right = second.size() - 1;
+            while(left <= right){
+                int m = left + (right - left) / 2;
+                if(second.get(m) <= target){
+                    v2 = second.get(m);
+                    left = m + 1;
+                }else{
+                    right = m - 1;
                 }
-
-                while(a > 1){
-                    if(days[s] == '0'){
-                        a--;
-                    }
-                    s++;
-                }
-
-                ans = Math.max(ans, e -  s + 1);
             }
-            System.out.println(ans);
+            if(v2 != -1){
+                max = Math.max(v1 + v2, max);
+            }
         }
-        out.flush();
+        return max;
+    }
+
+    public static void comb(long[] nums, int i, int n, List<Long> list, long sum){
+        if(i > n){
+            list.add(sum);
+            return;
+        }
+        comb(nums, i + 1, n, list, sum + nums[i]);
+        comb(nums, i + 1, n, list, sum);
     }
 }

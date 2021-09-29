@@ -1,4 +1,4 @@
-package walmart.ques2;
+package placement2021.walmart.ques2;
 
 //
 //what can be the optimal way?

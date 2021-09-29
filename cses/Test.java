@@ -1,10 +1,9 @@
-package walmart.ques4;
-
+package cses;
 
 import java.util.*;
 import java.io.*;
 
-public class Solution {
+public class Test {
     static class IScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -46,42 +45,7 @@ public class Solution {
             return str;
         }
     }
-
     static IScanner in = new IScanner();
     static PrintWriter out = new PrintWriter(System.out);
 
-    public static void main(String[] args) {
-        try {
-            solve();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public static void solve(){
-        int t = in.nextInt();
-        while(t-- > 0){
-            char[] days = in.nextLine().toCharArray();
-            int n = days.length;
-            int a = 0;
-            int ans = 0;
-
-            for (int s = 0, e = 0; e < n; e++){
-                if(days[e] == '0'){
-                    a++;
-                }
-
-                while(a > 1){
-                    if(days[s] == '0'){
-                        a--;
-                    }
-                    s++;
-                }
-
-                ans = Math.max(ans, e -  s + 1);
-            }
-            System.out.println(ans);
-        }
-        out.flush();
-    }
 }
