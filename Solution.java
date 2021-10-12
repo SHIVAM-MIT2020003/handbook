@@ -1,53 +1,81 @@
-
 import java.util.*;
-
 class Solution {
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        long[] weight = new long[n];
-        for (int i = 0; i < n; i++){
-            weight[i] = in.nextLong();
+        int[][] grid =  {
+        {1,1,0,1,1},
+        {1,1,1,1,1},
+        {1,1,0,1,1},
+        {1,1,0,1,1}};
+
+        System.out.println(new Solution().minDays(grid));
+    }
+    public int minDays(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int count = 0;
+        boolean[][] iv = new boolean[m][n];
+        int[][] start = new int[m][n];
+        int[][] low = new int[m][n];
+        int cc = 0;
+        boolean ap = false;
+
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if(grid[i][j] == 1){
+                    count++;
+                    if(!iv[i][j]){
+                        cc++;
+                        if(dfs(grid, i, j, -1, -1, iv, start, low, 0)){
+                            ap = true;
+                        }
+                    }
+                }
+
+            }
         }
-        long capacity = in.nextLong();
-        System.out.println(solve(weight, capacity));
+
+        if(cc >= 2 || count == 0) return 0;
+        if(ap || count == 1) return 1;
+        if(count > 1) return 2;
+        return -1;
+
     }
 
-    public static long solve(long[] nums, long capacity) {
-        List<Long> first = new ArrayList<>();
-        List<Long> second = new ArrayList<>();
-        int n = nums.length;
-        int mid = n / 2;
-        comb(nums, 0, mid, first, 0);
-        comb(nums, mid + 1, n - 1, second, 0);
-        Collections.sort(second);
-        long max = 0l;
-        for (long v1 : first){
-            long target = capacity - v1;
-            long v2 = -1;
-            int left = 0, right = second.size() - 1;
-            while(left <= right){
-                int m = left + (right - left) / 2;
-                if(second.get(m) <= target){
-                    v2 = second.get(m);
-                    left = m + 1;
-                }else{
-                    right = m - 1;
+
+    int[] dirr = {-1, 1, 0, 0};
+    int[] dirc = {0, 0, -1, 1};
+
+
+    public boolean dfs(int[][] grid, int r, int c, int pr, int pc, boolean[][] iv,
+                       int[][] start, int[][] low, int time){
+        time++;
+        start[r][c] = time;
+        low[r][c] = time;
+        iv[r][c] = true;
+        int count = 0;
+        boolean res = false;
+
+        for (int i = 0; i < 4; i++){
+            int nr = r + dirr[i];
+            int nc = c + dirc[i];
+            if(nr >= 0 && nr < grid.length && nc >= 0 && nc < grid[0].length && grid[nr][nc] == 1){
+                if(!iv[nr][nc]){
+                    count++;
+                    res = res || dfs(grid, nr, nc, r, c, iv, start, low, time);
+                    low[r][c] = Math.min(low[r][c], low[nr][nc]);
+
+                    if(pr == -1 && count > 1){
+                        res = true;
+                    }
+                    if(pr != -1 && (start[r][c] <= low[nr][nc])){
+                        res = true;
+                    }
+
+                }else if((pr != -1) && (nr != pr || nc != pc)){
+                    low[r][c] = Math.min(low[r][c], low[nr][nc]);
                 }
             }
-            if(v2 != -1){
-                max = Math.max(v1 + v2, max);
-            }
         }
-        return max;
-    }
-
-    public static void comb(long[] nums, int i, int n, List<Long> list, long sum){
-        if(i > n){
-            list.add(sum);
-            return;
-        }
-        comb(nums, i + 1, n, list, sum + nums[i]);
-        comb(nums, i + 1, n, list, sum);
+        return res;
     }
 }

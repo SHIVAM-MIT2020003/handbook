@@ -3,6 +3,11 @@ package cses.graph_algorithm;
 import java.io.*;
 import java.util.*;
 
+
+/*
+    find minimum length path from A to B
+ */
+
 public class Labyrinth {
     static class IScanner {
         BufferedReader br;
@@ -61,34 +66,36 @@ public class Labyrinth {
         Queue<Info> queue = new LinkedList<>();
         boolean[][] iv = new boolean[m][n];
 
-        outer:
+        int[] src = new int[2];
+        int[] dest = new int[2];
+
         for (int i = 0; i < m; i++){
             for (int j = 0; j < n; j++){
                 if(grid[i][j] == 'A'){
-                    queue.offer(new Info(i, j, ""));
-                    iv[i][j] = true;
-                    break outer;
+                    src = new int[]{i, j};
+                }else if(grid[i][j] == 'B'){
+                    dest = new int[]{i, j};
                 }
             }
         }
 
+        queue.offer(new Info(src[0], src[1]));
+        iv[src[0]][src[1]] = true;
+
         int[] row = {-1, 0, 1, 0};
         int[] col = {0, 1, 0, -1};
-        char[] dir = {'U', 'R', 'D', 'L'};
+        int[][] table = new int[m][n];
+        // U:  1, R: 2, D: 3, L: 4
 
-        while(!queue.isEmpty()){
+        boolean isFound = false;
+        while(!queue.isEmpty() && !isFound){
             int size = queue.size();
             for (int i = 0; i < size; i++){
                 int r = queue.peek().r;
                 int c = queue.peek().c;
-                String path = queue.peek().path;
                 queue.remove();
                 if(grid[r][c] == 'B'){
-                    out.println("YES");
-                    out.println(path.length());
-                    out.println(path);
-                    out.flush();
-                    return;
+                    isFound = true;
                 }
 
                 for (int d = 0; d < 4; d++){
@@ -96,23 +103,50 @@ public class Labyrinth {
                     int nc = c + col[d];
 
                     if(nr  >= 0 && nr < m && nc >= 0 && nc < n && (grid[nr][nc] != '#') && !iv[nr][nc]){
-                        queue.offer(new Info(nr, nc, path + dir[d]));
+                        queue.offer(new Info(nr, nc));
                         iv[nr][nc] = true;
+                        table[nr][nc] = d + 1;
                     }
                 }
             }
         }
-        out.println("NO");
+
+        if(!isFound)
+            out.println("NO");
+        else{
+            StringBuilder path = new StringBuilder("");
+            int i = dest[0], j = dest[1];
+
+            while(grid[i][j] != 'A'){
+                if(table[i][j] == 1){
+                    path.append("U");
+                    i++;
+                }else if(table[i][j] == 2){
+                    path.append("R");
+                    j--;
+                }else if(table[i][j] == 3){
+                    path.append("D");
+                    i--;
+                }else if(table[i][j] == 4){
+                    path.append("L");
+                    j++;
+                }
+            }
+
+            out.println("YES");
+            out.println(path.length());
+            out.println(path.reverse().toString());
+
+        }
         out.flush();
     }
 
     static class Info{
-        String path;
         int r, c;
-        public Info(int i, int j, String p){
+        public Info(int i, int j){
             r = i;
             c = j;
-            path = p;
         }
     }
 }
+

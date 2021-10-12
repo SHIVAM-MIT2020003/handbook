@@ -1,47 +1,9 @@
-package template;
+package cses.sorting_and_searching;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Solution {
-    static int gcd(int a, int b) {
-        if (b == 0) return a;
-        return gcd(b, a % b);
-    }
-    static boolean isPrime(int n) {
-        if (n < 2) return false;
-        for (int x = 2; x * x <= n; x++) {
-            if (n % x == 0) return false;
-        }
-        return true;
-    }
-    static boolean[] sieveOfEratosthenes(int n) {
-        boolean[] ans = new boolean[n + 1];
-        Arrays.fill(ans, true);
-        ans[1] = false;
-        for (int i = 2; i * i <= n; i++) {
-            if (ans[i]) {
-                for (int j = i + i; j <= n; j = j + i) {
-                    ans[j] = false;
-                }
-            }
-        }
-        return ans;
-    }
-    static long binPow(long a, long b, long m) {
-        a %= m;
-        long res = 1;
-        while (b > 0) {
-            if ((b & 1) != 0)
-                res = res * a % m;
-            a = a * a % m;
-            b >>= 1;
-        }
-        return res;
-    }
-    static int max(int ...nums){
-        return Arrays.stream(nums).max().getAsInt();
-    }
+public class FerrisWheel {
     static class IScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -85,7 +47,9 @@ public class Solution {
     }
     static IScanner in = new IScanner();
     static PrintWriter out = new PrintWriter(System.out);
+
     static Random rand = new Random();
+
     static void shuffle(int[] nums, int n) {
         for (int i = 1; i < n; i++) {
             int j = rand.nextInt(i + 1);
@@ -95,15 +59,26 @@ public class Solution {
         }
     }
 
-    static void main(String[] args) {
-        try {
-            solve();
-        }catch (Exception e){
-            e.printStackTrace();
+    public static void main(String[] args) {
+        int n = in.nextInt();
+        int[] nums = new int[n];
+        long x = in.nextInt();
+        for (int i = 0; i < n; i++){
+            nums[i] = in.nextInt();
         }
-    }
-
-    public static void solve(){
+        shuffle(nums, n);
+        Arrays.sort(nums);
+        int count = 0;
+        int s = 0, e = n - 1;
+        while(s <= e){
+            if(nums[s] + nums[e] <= x){
+                s++; e--;
+            }else{
+                e--;
+            }
+            count++;
+        }
+        out.println(count);
         out.flush();
     }
 }

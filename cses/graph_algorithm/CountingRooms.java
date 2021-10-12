@@ -1,11 +1,11 @@
 package cses.graph_algorithm;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
+
+/*
+count components
+ */
 
 public class CountingRooms {
     static class IScanner {
