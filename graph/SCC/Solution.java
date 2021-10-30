@@ -1,7 +1,5 @@
 package graph.SCC;
 
-import atcoder.dp.A;
-
 import java.util.*;
 
 class Solution {
