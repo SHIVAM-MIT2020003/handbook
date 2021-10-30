@@ -8,6 +8,7 @@ public class Solution {
         if (b == 0) return a;
         return gcd(b, a % b);
     }
+
     static boolean isPrime(int n) {
         if (n < 2) return false;
         for (int x = 2; x * x <= n; x++) {
@@ -15,6 +16,7 @@ public class Solution {
         }
         return true;
     }
+
     static boolean[] sieveOfEratosthenes(int n) {
         boolean[] ans = new boolean[n + 1];
         Arrays.fill(ans, true);
@@ -28,6 +30,8 @@ public class Solution {
         }
         return ans;
     }
+
+    //iterative
     static long binPow(long a, long b, long m) {
         a %= m;
         long res = 1;
@@ -39,6 +43,9 @@ public class Solution {
         }
         return res;
     }
+
+    //recursive
+
     static int max(int ...nums){
         return Arrays.stream(nums).max().getAsInt();
     }

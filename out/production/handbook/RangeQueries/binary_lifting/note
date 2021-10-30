@@ -1,0 +1,4 @@
+Ques: HOW LOG = (int)(Math.log(n) / Math.log(2)) + 1   ??
+
+Ans: log(n) => number of bits required to represent 'n'.
+

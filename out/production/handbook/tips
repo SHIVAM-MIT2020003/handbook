@@ -1,0 +1,41 @@
+Coding Tips:
+
+1. Start with Brute-force
+2. Pattern Detection
+3. Time complexity to APPROACH
+4. N-Dimensional Observation
+5. Pre-Simplification
+6. Naming Convention
+7. Visualization => CODE (***)
+8. Example => Observation (***)
+9. Slow and Complete Visual Simulation
+10. Simulation => Code (***)
+11. Think ONLY LOGIC                            (DO NOT THINK ABOUT CODE)
+12. NO Overthinking
+
+
+
+Tree : Undirected Connected Acyclic Graph
+Disjoint Set: Used for Undirected Graph
+
+LLD
+https://www.tutorialspoint.com/design_pattern/builder_pattern.htm
+https://www.tutorialspoint.com/design_pattern/decorator_pattern.htm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

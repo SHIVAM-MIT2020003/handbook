@@ -1,81 +1,120 @@
+
+import com.sun.source.tree.Tree;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
-class Solution {
+
+public class Solution{
     public static void main(String[] args) {
-        int[][] grid =  {
-        {1,1,0,1,1},
-        {1,1,1,1,1},
-        {1,1,0,1,1},
-        {1,1,0,1,1}};
 
-        System.out.println(new Solution().minDays(grid));
-    }
-    public int minDays(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int count = 0;
-        boolean[][] iv = new boolean[m][n];
-        int[][] start = new int[m][n];
-        int[][] low = new int[m][n];
-        int cc = 0;
-        boolean ap = false;
+        IScanner in = new IScanner();
+        int n = Integer.parseInt(in.nextLine());
+        String s = in.nextLine();
+        System.out.println(solve(s, n));
 
-        for (int i = 0; i < m; i++){
-            for (int j = 0; j < n; j++){
-                if(grid[i][j] == 1){
-                    count++;
-                    if(!iv[i][j]){
-                        cc++;
-                        if(dfs(grid, i, j, -1, -1, iv, start, low, 0)){
-                            ap = true;
-                        }
-                    }
-                }
-
-            }
-        }
-
-        if(cc >= 2 || count == 0) return 0;
-        if(ap || count == 1) return 1;
-        if(count > 1) return 2;
-        return -1;
 
     }
 
+    static class IScanner {
+        BufferedReader br;
+        StringTokenizer st;
 
-    int[] dirr = {-1, 1, 0, 0};
-    int[] dirc = {0, 0, -1, 1};
+        public IScanner() {
+            br = new BufferedReader(new InputStreamReader(System.in));
+        }
 
+        String next() {
+            while (st == null || !st.hasMoreElements()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
 
-    public boolean dfs(int[][] grid, int r, int c, int pr, int pc, boolean[][] iv,
-                       int[][] start, int[][] low, int time){
-        time++;
-        start[r][c] = time;
-        low[r][c] = time;
-        iv[r][c] = true;
-        int count = 0;
-        boolean res = false;
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
 
-        for (int i = 0; i < 4; i++){
-            int nr = r + dirr[i];
-            int nc = c + dirc[i];
-            if(nr >= 0 && nr < grid.length && nc >= 0 && nc < grid[0].length && grid[nr][nc] == 1){
-                if(!iv[nr][nc]){
-                    count++;
-                    res = res || dfs(grid, nr, nc, r, c, iv, start, low, time);
-                    low[r][c] = Math.min(low[r][c], low[nr][nc]);
+        long nextLong() {
+            return Long.parseLong(next());
+        }
 
-                    if(pr == -1 && count > 1){
-                        res = true;
+        double nextDouble() {
+            return Double.parseDouble(next());
+        }
+
+        String nextLine() {
+            String str = "";
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return str;
+        }
+    }
+
+    static int solve(String A, int n){
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++){
+            int ascii = A.charAt(i) - 'A' + 1;
+            nums[i] = ascii;
+        }
+
+        TreeSet<Integer> odd = new TreeSet<>((a, b) -> Integer.compare(nums[a], nums[b]));
+        TreeSet<Integer> even = new TreeSet<>((a, b) -> Integer.compare(nums[a], nums[b]));
+
+        for (int i = 0; i < n; i++)
+        {
+            if(nums[i] % 2 == 0){
+                even.add(i);
+            }else{
+                odd.add(i);
+            }
+        }
+        for (int i = 0; i < n; i++){
+            odd.remove(i);
+            even.remove(i);
+
+            if(nums[i] % 2 == 0){
+                if(odd.isEmpty()){
+                    continue;
+                }else{
+                    int temp = odd.pollFirst();
+                    if(nums[i] > nums[temp]){
+                        int t = nums[i];
+                        nums[i] = nums[temp];
+                        nums[temp] = t;
+                        even.add(temp);
+                    }else {
+                        odd.add(temp);
                     }
-                    if(pr != -1 && (start[r][c] <= low[nr][nc])){
-                        res = true;
+                }
+            }else{
+                if(even.isEmpty()) continue;
+                else{
+                    int tempi = even.pollFirst();
+                    if(nums[i] > nums[tempi]){
+                        int t = nums[i];
+                        nums[i] = nums[tempi];
+                        nums[tempi] = t;
+                        odd.add(tempi);
+                    }else{
+                        even.add(tempi);
                     }
-
-                }else if((pr != -1) && (nr != pr || nc != pc)){
-                    low[r][c] = Math.min(low[r][c], low[nr][nc]);
                 }
             }
         }
+        int res = 0;
+        for (int i = 0; i < n; i++){
+            res += i * nums[i];
+        }
+
         return res;
     }
 }
